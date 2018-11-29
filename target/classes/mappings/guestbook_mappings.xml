@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="GuestBookDAO">
+
+
+<resultMap id="guestbookResult" type="guestbook">
+
+<id column="no" property="no"/>
+
+<result column="name" property="name"/>
+
+<result column="content" property="content"/>
+
+<result column="password" property="password"/>
+
+<result column="regdate" property="reg_date"/>
+
+</resultMap>
+
+<insert id="insert">insert into guestbook values (guestbook_seq.nextval, #{name}, #{content}, #{password}, sysdate) </insert>
+
+<delete id="delete">DELETE GUESTBOOK WHERE no = #{no} </delete>
+
+<!-- <select id="getList" resultType="guestbook">SELECT no, name, content, password, to_char(reg_date, 'yyyy-mm-dd hh:mi:ss' ) regdate from guestbook order by regdate desc</select> -->
+
+
+<select id="getList" resultMap="guestbookResult">SELECT no, name, content, password, to_char(reg_date, 'yyyy-mm-dd hh:mi:ss' ) regdate from guestbook order by regdate desc </select>
+
+<select id="getKeywordList" resultType="guestbook">SELECT no, name, content, password, to_char(reg_date, 'yyyy-mm-dd hh:mi:ss' ) regdate from guestbook where content like #{keyword} order by regdate desc </select>
+
+</mapper>
